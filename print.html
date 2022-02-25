@@ -1,0 +1,702 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>MaurerGroupDocs</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="home.html">MaurerGroupDocs</a></li><li class="chapter-item expanded affix "><li class="part-title">Spectroscopy</li><li class="chapter-item expanded "><a href="spectroscopy/castep-xps-nexafs.html"><strong aria-hidden="true">1.</strong> CASTEP XPS and NEXAFS Tutorial</a></li><li class="chapter-item expanded affix "><li class="part-title">Compilation guides</li><li class="chapter-item expanded "><a href="compilation/aims-avon.html"><strong aria-hidden="true">2.</strong> FHI aims on Avon</a></li><li class="chapter-item expanded "><a href="compilation/aims-sulis.html"><strong aria-hidden="true">3.</strong> FHI aims on Sulis</a></li><li class="chapter-item expanded "><a href="compilation/gpaw-archer2.html"><strong aria-hidden="true">4.</strong> GPAW on Archer2</a></li><li class="chapter-item expanded "><a href="compilation/gpaw-sulis.html"><strong aria-hidden="true">5.</strong> GPAW on Sulis</a></li><li class="chapter-item expanded affix "><li class="part-title">Julia tutorials</li><li class="chapter-item expanded "><a href="julia/julia-setup.html"><strong aria-hidden="true">6.</strong> Setup Julia on HPC systems</a></li><li class="chapter-item expanded "><a href="julia/nqcd.html"><strong aria-hidden="true">7.</strong> Contributing to NQCD</a></li><li class="chapter-item expanded "><a href="julia/hosting-jll.html"><strong aria-hidden="true">8.</strong> Hosting binary packages with BinaryBuilder.jl</a></li><li class="chapter-item expanded affix "><li class="part-title">Visualisation and rendering</li><li class="chapter-item expanded "><a href="visualisation/pymol.html"><strong aria-hidden="true">9.</strong> Pymol API tutorial</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">MaurerGroupDocs</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="maurergroupdocs"><a class="header" href="#maurergroupdocs">MaurerGroupDocs</a></h1>
+<p>Welcome to the Maurer group documentation!</p>
+<p>This book contains useful guides and tutorials to help you get up to speed with the software and scripts used within our group.</p>
+<h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
+<p>This book was created using <a href="https://rust-lang.github.io/mdBook/">mdBook</a>.
+Additional pages can be created by adding a new entry into the <code>SUMMARY.md</code> file. 
+This will create a blank markdown file where you can include your contribution.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="castep-xps-and-nexafs-tutorial"><a class="header" href="#castep-xps-and-nexafs-tutorial">CASTEP XPS and NEXAFS Tutorial</a></h1>
+<p>All tools needed to generate XPS and NEXAFS spectra can be found on the Maurer Group Github in the 'grouptools/NEXAFS_scripts' repository. Included in this are several tools to help in this process:</p>
+<ul>
+<li><em>autoscript.py</em> - Python script which will generate all XPS and NEXAFS input files</li>
+<li><em>core_excitation.py</em> - Code in which the autoscript will use</li>
+<li><em>castep_get_XPS_energies.py</em> - Python script to calculate the XPS binding energies</li>
+<li>_plot_xps.py - Python script to sum up XPS peaks and broaden into a spectrum</li>
+<li><em>execute_molpdos.sh</em> - Bash script to run MolPDOS for all angles and atoms</li>
+<li><em>plot_nexafs.py</em> - Python script to process MolPDOS output data into a broadened NEXAFS spectra</li>
+<li><em>plot_mo.py</em> - Python script to process MolPDOS output data into MO orbital spectra</li>
+</ul>
+<h2 id="1-set-up"><a class="header" href="#1-set-up">1. Set-Up</a></h2>
+<p>To begin with, a suitable file system, naming convention, and some initial ground-state calculations are needed to help with the process. In CASTEP all files, input, and output have the same seedname so for our system we will use a '<em>molecule_metal</em>' configuration. This is important to implement right from the beginning as scripts used later will use this convention. The '<em>molecule</em>' is simply just the investigated molecule, e.g. azulene, benzene, pyridine, and the '<em>metal</em>' is the metal substrate, e.g. Cu, Au, or simply gas if no metal surface is present. So for example in this tutorial, we will be looking at azulene on a silver surface so files would use <em>azulene_Ag</em> as the seedname to make files such as <em>azulene_Ag.cell</em> and will continue with this tutorial using this system.</p>
+<p>Next, to organise the filing system to use, once all set up this should contain:</p>
+<ul>
+<li>Input and output files from the initial ground-state calculation</li>
+<li><strong>freestand</strong> directory (Directory containing files from the calculation of the free-standing overlayer, only needed when including a metal surface)</li>
+<li><strong>XPS</strong> directory (Directory generated by autoscript.py)</li>
+<li><strong>NEXAFS</strong> directory (Directory generated by autoscript.py)</li>
+</ul>
+<p>and should end up looking something like this.</p>
+<img src="spectroscopy/../images/spectroscopy/setup.png">
+<p>The initial singlepoint ground-state calculation should be the first to be completed. The reason for this can be for several reasons but the main one is to work out the ground-state total energy that will be used later to calculate the XPS binding energies. It is then important to make sure the settings you are using for this are sufficient and will be carried on through the process. If this is your first time using CASTEP or do not know the pseudopotential for an element, this step can be used to generate on-the-fly pseudopotentials and obtain the pseudopotential strings for all elements in the calculation. If you are already well versed in CASTEP and already know which pseudopotentials you will use, you can set the in from the start here and skip this.</p>
+<p>If you're investigating a molecule on a metal surface rather than a gas-phase molecule, you will need to perform a second singlepoint calculation. This will be carried out in the <strong>freestand</strong> directory. In here you should copy over the <em>.cell</em> and <em>.param</em> files from the ground-state but rename them <em>azulene_free</em> to describe correctly and avoid confusion and required for a later step. In this directory you will need to open up the <em>.cell</em> file and delete the metal surface, leaving only the molecule, which is called the free-standing overlayer. This step is carried to generate the <em>azulene_free.check</em> file which is used later on in the NEXAFS calculations for the MO projection. If your system is a gas-phase system (no metal surface) this step and be skipped as the .check file that will be used will be from the ground-state calculation previously ran so for this would be the <em>azulene_gas.check</em> file.</p>
+<p>To acquire the pseudopotential string if needed, open any of the <em>.usp</em> files. Here we will use the <em>C_C18_PBE_OTF.usp</em> file. At the top of the file should give you all the information about the pseudopotential used and near the bottom of the box will be the definition string for you to copy to use for the XPS and NEXAFS calculations. In this case for carbon, the string is <code>2|1.4|10|12|13|20:21(qc=7)</code>, record this down and do the same for each element in the system to use in the next step.</p>
+<img src="spectroscopy/../images/spectroscopy/pseudopotential_string.png" width="500">
+<h2 id="2-generation-of-xps-and-nexafs-inputs-using-autoscriptpy"><a class="header" href="#2-generation-of-xps-and-nexafs-inputs-using-autoscriptpy">2. Generation of XPS and NEXAFS inputs using autoscript.py</a></h2>
+<p>To generate the XPS and NEXAFS directories with all the input files needed for each individual carbon atom you need to set up a directory with:</p>
+<ul>
+<li><em>autoscript.py</em></li>
+<li><em>core_excitation.py</em></li>
+<li><em>Geometry file of the system</em></li>
+</ul>
+<img src="spectroscopy/../images/spectroscopy/autoscript.png">
+<p>The <em>core_excitation.py</em> file can be left alone and doesn't need to be altered. To use this code all you need to do is open up the <em>autoscript.py</em> file and change the required fields and set the settings you want in the calculation, overall, this will be the same as the ground-state calculations with a few exceptions which will be explained. At the top the first thing to alter is the <code>input_name</code>, the geometry file to read in and the <code>output_name</code> you want the script to use as the CASTEP seedname. In this case, these two are basically the same and would be <code>azulene_Ag.cell</code> and <code>azulene_Ag</code> but through ASE, you can read in any file format you want if needed.</p>
+<p>Next is where you need to set the elements and pseudopotential strings you save before. Here you can create any number you need and copy in the pseudopotential strings. For the atoms you want to study the XPS for you will need to copy in the pseudopotential string twice again but this time adding in the electron configuration to include either a full core-hole (XPS) or half core-hole (NEXAFS). This is done starting at line 81, where for a C1s calculation we put in <code>element='C'</code> and <code>pspots='2|1.4|10|12|13|20:21{1s1,2s2,2p3}(qc=7)'</code> with the full core-hole in the <code>xce</code> and the same again for <code>nce</code> but this time with a half core hole.</p>
+<img src="spectroscopy/../images/spectroscopy/core_holes.png">
+<p>Also, starting on line 100 is where the pseudopotential strings you stated at the top are written out to the .cell files and you need to add/change to match with the elements you have, this will include adding in any new lines for the number of elements and adding this line to the print line for both XPS and NEXAFS sections. In the default script included is an example of how a new line if a 4th element nitrogen is needed and if a gas-phase calculation is begin run then the metal and line3 would need to be commented out.</p>
+<img src="spectroscopy/../images/spectroscopy/write_pseudo.png">
+<p>The final part is to set the parameters you want for the calculation. Under the CASTEP calculators <code>QM1</code> and <code>QM2</code> you should set <code>castep_command</code> to the path of where your CASTEP binary is located. Next in QM1 choose and set all the keywords you want to include in the XPS calculation. Then if any settings need to be changed for the NEXAFS calculation add these to <code>QM2</code>. Most likely this will only need to be <code>nextra_bands</code> and <code>elnes_nextra_bands</code>. This is due to only the first needed for XPS and usually, only a low number is needed and any higher is a waste computationally. For the NEXAFS calculations the second term is needed and to generate a nice full spectrum without it ending too soon a much larger number of bands are needed and for the MolPDOS analysis, both <code>nextra_bands</code> and <code>elnes_nextra_bands</code> need to be the same value in the NEXAFS case. So set this value to a higher value(trial and error/learning will help with picking a suitable number).</p>
+<p>To get a general idea of what are suitable settings you will need to change and use, <code>cut_off_energy=450</code> is suitable enough for most systems, a sanity check to make sure you have a suitable value is to look at the <em>.usp</em> files for all elements and at the top of the file are cut-off values and a level of accuracy they give, make sure all elements are at least FINE, <code>kpoints_mp_grid='6 6 1'</code> is sufficient for metal surface structures and only <code>'1 1 1'</code> is needed for gas-phase. For XPS calculations <code>nextra_bands=100</code> is more than enough. For <code>elnes_nextra_bands</code> this depends on the metal used and for gas-phase as well the size of the unit cell. The larger the unit cell the higher number needed along with higher atomic number metals, a good starting point would probably be <code>1000</code>.</p>
+<p>Finally, if a MolPDOS analysis is needed you need to set a few other keywords for this. The first is the molecular orbitals you want to project out. Here you can give as many MO states as you want but the key ones you want are the frontier states around the HOMO and LUMO. To get the correct numbers of the HOMO and LUMO you can simply sum up all the electrons in the valence shell of all atoms in the molecule and divide by two. For hydrogen this is 1, carbon is 4, nitrogen 5 etc. The halved number will correspond to the HOME state. So in this case for azulene, C10H8 has a total of 48 valence electrons, so state 24 is the HOMO. You would ideally like a range above and below the bandgap with more unoccupied states than occupied. In the script change the range in MO to the required range and secondly is the reference .check file needed. This will be the azulene_free.check so change this to the right name. For a gas-phase calculation, I would suggest something along the lines of azulene_ground.check as keeping the same name as it is already would not work. Last is to comment out the <code>assert 0</code> on line 130 to run the part of the script that will write these settings out.</p>
+<p>Once all of that is done it is time to run <em>autoscript.py</em>, you should see two directories called XPS and NEXAFS have been created. These should contain a directory for each carbon atom in your molecule labeled with a number, this number just corresponds to the order it appears in the input geometry file. If you look into these directories they should contain the two CASTEP input files <em>.cell</em> and <em>.param</em>. You can easily copy the parameter file over to the main folder, set the charge to zero and use it for the ground state calculation.</p>
+<img src="spectroscopy/../images/spectroscopy/run_autoscript.png">
+<p>You will notice that running <em>autoscript.py</em> will give a warning that a pseudopotential path has not been given to the calculator, this is fine and is not a problem as we are specifically stating our pseudopotentials out and not using a database which is what the code is asking for. This function can be used to point to a database of pseudopotentials which is not implemented to keep full control over the pseudopotentials we want to use.</p>
+<h2 id="3-setting-up-and-running-jobs"><a class="header" href="#3-setting-up-and-running-jobs">3. Setting up and running jobs</a></h2>
+<p>Now you can copy over the contents of your newly created <strong>XPS</strong> and <strong>NEXAFS</strong> folders back to your main folder and finally set a few things left before copying over the files to your chosen cluster to run them.</p>
+<p>The first would be to create your reference <em>azulene_free.check</em> file needed for the MolPDOS calculation. Once this is done this file then needs to be copied into every atom directory in the NEXAFS directory. If a gas-phase calculation is being performed this will instead be the <em>azulene_gas.check</em> created from the ground state calculation and changed to be called <em>azulene_ground.check</em>. Also, what is needed is a .deltascf file which gives the parameters needed for the MolPDOS calculation, here we point the code to the <em>azulene_free.check</em> file and list the specific states that we want to project out.</p>
+<img src="spectroscopy/../images/spectroscopy/deltascf_file.png" width="500">
+<p>Once done each atom folder should look like this.</p>
+<img src="spectroscopy/../images/spectroscopy/nexafs_setup.png">
+<p>All that's is left is to run all of the XPS and NEXAFS jobs. In regards to the number of nodes and walltime needed for the calculations, the XPS calculations will be similar to the length of the ground-state calculation. The NEXAFS will require more memory (nodes) and longer walltimes and the best practice would be to run only one calculation first to gauge this and then use the settings for all of the rest. With time a better understanding of the requirements needed will be able to be learned. Once done transfer the data back to your local machine and for NEXAFS calculations you should see the usual outputs along with a <em>.molpdos_state_x_1</em> file for all MO state you gave earlier.</p>
+<img src="spectroscopy/../images/spectroscopy/molpdos_state.png">
+<h2 id="4-obtaining-and-plotting-xps"><a class="header" href="#4-obtaining-and-plotting-xps">4. Obtaining and plotting XPS</a></h2>
+<p>The first task that needs to be done after all the calculations are done is to calculate the XPS binding energies for each atom and plot the spectrum, to do this we will use the two scripts:</p>
+<ul>
+<li><em>castep_get_xps_energies.py</em> </li>
+<li><em>plot_xps.py</em></li>
+</ul>
+<p>The <em>castep_get_xps_energies.py</em> python script should be placed in the <strong>XPS</strong> directory and then the necessary parameters have to be changed in the script manually. These will be the <code>filename</code>, <code>element</code> and <code>atoms</code> to the required settings that match the system. Once this is done, the script can be executed and it will read the groud-state and excited-state energies for each atom and calculate and apply the pseudopotential correction, and finally print out the binding energies into an XPS_peaks.txt file.</p>
+<img src="spectroscopy/../images/spectroscopy/castep_get_xps_energies.png">
+<img src="spectroscopy/../images/spectroscopy/getting_xps_energies.png">
+<p>With the XPS binding energies now written out, the <em>plot_xps.py</em> script can be used to take the individual shifts and sum them all up and plot them into a broadened spectrum. By commenting out the <code>assert 0</code> command on line 87 the script will broaden each individual atom peak and create text files for each atom which can be plotted along with the full spectrum to show the breakdown of the spectrum.</p>
+<h2 id="5-nexafs-post-processing-and-molpdos"><a class="header" href="#5-nexafs-post-processing-and-molpdos">5. NEXAFS Post-Processing and MolPDOS</a></h2>
+<p>Now to run the NEXAFS post-processing we need a settings file with all the information needed, this will be a <em>.molpdos file</em>. In this file, you will see a variety of settings needed to calculate the NEXAFS and MO data. The most significant ones that need to be changed are:</p>
+<ul>
+<li><code>nexafs_theta</code> - The theoretical X-ray incidence angle you want to calculate for</li>
+<li><code>nexafs_xshift</code> - The XPS binding energy corresponding to the same carbon, will be done automatically by the script</li>
+<li><code>nexafs_state</code> - Which atomic species you want to calculate for, you will need to only change the first number. This number will be +1 the number of elements in the system, as for this example, is <code>4 1 1 1</code>. 4 because the first element is hydrogen, second is carbon, third is silver and the last is the new excited carbon, <code>C:exc</code>, we defined (this element will always be the last one in the list).</li>
+</ul>
+<p>If you want to project the NEXAFS transitions onto molecular states of a reference system, you also have to set:</p>
+<ul>
+<li><code>modos_state</code> - Set the corresponding states to exactly the same orbital values you selected previously for the calculation</li>
+</ul>
+<img src="spectroscopy/../images/spectroscopy/molpdos_file.png" width="500">
+<p>To run the MolPDOS post-processing you first need to have the MolPDOS binary located in your path and this will use the <em>execute_molpdos.sh</em> script to first add the correct nexafs_xshift to the right atoms and then run the MolPDOS binary for each angle you want. So these need to be set at the top of the script, change the first <code>Array</code> to the correct values of the atoms and the AngleArray to the incidence angles you want to calculate. The change the molecule, metal and element to the correct setting and then run the script.</p>
+<p>This script will take some time to run and finish for all of the atoms and angles but will write out the progress of the script into the terminal to show you the progress. To not take up the terminal nohup can be used to run the script in the background. Once done this will have to generate a new folder in each of the atoms folders for each angle chosen and be filled with a whole host of <em>.dat</em> files.</p>
+<img src="spectroscopy/../images/spectroscopy/run_molpdos.png">
+<img src="spectroscopy/../images/spectroscopy/finish_molpdos.png">
+<p>These should be organised into a corresponding directory labeled based on the theta value, for example, <strong>t25</strong>. Repeat this MolPDOS process for each incidence angles you want to simulate for and for all carbon atoms. Normal practice would be for 00, 25, 53, and 90 degrees. Your directory for all carbons should look like this.</p>
+<img src="spectroscopy/../images/spectroscopy/molpdos_files.png">
+<p>You should use an automated script for this procedure. Provided is the <em>auto_molpdos.sh</em> script which should be executed in the NEXAFS directory, It reads the <em>C_XPS_peaks.txt</em> file (copy from XPS to the NEXAFS directory), changes a generic <em>.molpdos</em> file to match the desired angle and XPS binding energies, goes to the corresponding carbon directory, and executes the script, and moves the resulting data in the respective folders.</p>
+<h2 id="6-summation-and-broadening-of-the-nexafs-spectra"><a class="header" href="#6-summation-and-broadening-of-the-nexafs-spectra">6. Summation and broadening of the NEXAFS spectra</a></h2>
+<p>The final step left to do is to take all of the data produced through the MolPDOS post-processing, sum the contributions from all carbon atoms and applying a broadening function to create the NEXAFS spectra. For this you will need the python scripts:</p>
+<ul>
+<li><em>plot_nexafs.py</em></li>
+<li><em>plot_mo.py</em></li>
+</ul>
+<p>These scripts should be placed in the <strong>NEXAFS</strong> directory and change the corresponding settings inside the script to match you data. These are listed into different groups, the first is <code>Broadening Parameters</code>. These are the settings of the pseudo-Voight broadening scheme that will be applied, the settings in there are the default carbon settings that usually work best but they can be modified to create the best spectra. If a different element is being studied N or O K-edge then the <code>xstart</code> and <code>xstop</code> values will have to be changed to fall in the energy range of the chose element. The next group are the <code>System Settings</code>, these are the main settings to change. Here we have the <code>molecule</code> and <code>metal</code> variables to change to the name of your system, and then also the <code>element</code>. We have the <code>n_type</code> which will decide what NEXAFS spectra you want to generate, a number between 1-4, default would be 4, the script shows what each number performs. <code>angle</code> you will set to the same angles you selected when running MolPDOS, so in this case <code>'t00', 't25', 't53', t90'</code>. Then the <code>numbers</code> will be the number range of your atom directories, here 48 to 57, and the atom number, this is as described before the value the excited element comes in the list of all elements, always the last number.</p>
+<img src="spectroscopy/../images/spectroscopy/plot_nexafs_settings.png">
+<p>Run this script and it will generate (for each angle) a <em>*deltas.txt</em>, containing the summed up raw data of all NEXAFS transitions, and a _*spectrum.txt' file with the fully calculated broadened spectrum. If the individual carbon contributions of the NEXAFS spectrum is desired then comment out the <code>assert 0</code> command on line 122 and this will generate a separate <em>.txt</em> file for each individual atom at each angle.</p>
+<img src="spectroscopy/../images/spectroscopy/plot_nexafs.png">
+<p>The last step would be to output the individual MO contributions, these settings to change are the exact same as before for the NEXAFS script but now with one more which is <code>MO</code>, which will be the list of MO orbitals you choose to project out. Run the script again and you will receive a <em>*.txt</em> file of the delta peaks and the broadened orbital projection for all orbitals and angles. This can now be plotted with its corresponding NEXAFS spectra to view its contributions.</p>
+<img src="spectroscopy/../images/spectroscopy/plot_mo.png">
+<div style="break-before: page; page-break-before: always;"></div><h1 id="compiling-fhiaims-on-avon"><a class="header" href="#compiling-fhiaims-on-avon">Compiling FHIaims on Avon</a></h1>
+<h2 id="step-1-git-clone-fhiaims-from-gitlab"><a class="header" href="#step-1-git-clone-fhiaims-from-gitlab">Step 1: Git clone FHIaims from gitlab</a></h2>
+<p>To gain access to the Gitlab, you can e-mail kokott@fhi-berlin.mpg.de or aims-coordinators@fhi-berlin.mpg.de which should get you access after setting up a user account. </p>
+<p>Once you have access, </p>
+<ol>
+<li>SSH into Avon HPC <code>ssh username@avon.scrtp.warwick.ac.uk</code></li>
+<li>Git clone FHIaims repository <code>git clone https://aims-git.rz-berlin.mpg.de/aims/FHIaims.git </code> </li>
+</ol>
+<h2 id="step-2-compiling-fhiaims"><a class="header" href="#step-2-compiling-fhiaims">Step 2: Compiling FHIaims</a></h2>
+<p>Load the necessary modules - NB: Avon uses a different intel convention to previous use on older HPC i.e., Orac or Tinis.</p>
+<pre><code class="language-bash">module load iccifort/2019.5.281 impi/2019.7.217 imkl/2019.5.281
+module load GCCcore/9.3.0
+module load CMake/3.16.4
+</code></pre>
+<p><code>cd</code> into the FHIaims directory and issue the following command <code>mkdir build &amp;&amp; cd build</code>.
+Within the <code>build/</code> directory <code>touch initial.cmake</code> </p>
+<h3 id="example-of-initialcmake"><a class="header" href="#example-of-initialcmake">Example of <code>initial.cmake</code></a></h3>
+<pre><code class="language-makefile">set(CMAKE_Fortran_COMPILER mpiifort CACHE STRING &quot;&quot; FORCE)
+
+set(CMAKE_Fortran_FLAGS &quot;-O3 -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
+
+set(Fortran_MIN_FLAGS &quot;-O0 -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
+
+set(LIB_PATHS &quot;$ENV{MKLROOT}/lib/intel64&quot; CACHE STRING &quot;&quot; FORCE)
+
+set(LIBS &quot;mkl_intel_lp64 mkl_sequential mkl_core mkl_blacs_intelmpi_lp64 mkl_scalapack_lp64&quot; CACHE STRING &quot;&quot; FORCE)
+
+set(CMAKE_C_COMPILER icc CACHE STRING &quot;&quot; FORCE)
+
+set(CMAKE_C_FLAGS &quot;-O3 -ip -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
+</code></pre>
+<p>Next issue the command <code>cmake -C initial.cmake. ../.</code> - after this is complete output then issue the next command <code>make -j 8</code> - NB: the number refers to the number of processes on that machine. 
+The compiled code <code>aims.$VERSION.scalapack.mpi.x</code> will be in <code>build/</code> directory. </p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="compiling-fhiaims-on-sulis"><a class="header" href="#compiling-fhiaims-on-sulis">Compiling FHIaims on Sulis</a></h1>
+<h2 id="step-1-git-clone-fhiaims-from-gitlab-1"><a class="header" href="#step-1-git-clone-fhiaims-from-gitlab-1">Step 1: Git clone FHIaims from gitlab</a></h2>
+<p>To gain access to the Gitlab, you can e-mail kokott@fhi-berlin.mpg.de or aims-coordinators@fhi-berlin.mpg.de which should get you access after setting up a user account. </p>
+<p>Git clone FHIaims repository <code>git clone https://aims-git.rz-berlin.mpg.de/aims/FHIaims.git </code> </p>
+<h2 id="step-2-compiling-fhiaims-1"><a class="header" href="#step-2-compiling-fhiaims-1">Step 2: Compiling FHIaims</a></h2>
+<p>Load the necessary modules - </p>
+<pre><code class="language-bash">module purge
+module load foss/2021b
+module load CMake
+</code></pre>
+<p><code>cd</code> into the FHIaims directory and issue the following command <code>mkdir build &amp;&amp; cd build</code>.
+Within the <code>build/</code> directory <code>touch initial.cmake</code> </p>
+<h3 id="example-of-initialcmake-1"><a class="header" href="#example-of-initialcmake-1">Example of <code>initial.cmake</code></a></h3>
+<pre><code class="language-makefile">set(CMAKE_Fortran_COMPILER mpif90 CACHE STRING &quot;&quot;)
+set(CMAKE_Fortran_FLAGS &quot;-O3 -ffree-line-length-none -fallow-argument-mismatch &quot; CACHE STRING &quot;&quot;)
+set(Fortran_MIN_FLAGS &quot;-O0 -fbacktrace -ffree-line-length-none -fallow-argument-mismatch &quot; CACHE STRING &quot;&quot;)
+set(LIBS &quot;scalapack openblas&quot; CACHE STRING &quot;&quot; FORCE)
+set(USE_MPI ON CACHE BOOL &quot;&quot; FORCE)
+set(USE_SCALAPACK ON CACHE BOOL &quot;&quot; FORCE)
+set(USE_LIBXC ON CACHE BOOL &quot;&quot; FORCE)
+set(USE_HDF5 OFF CACHE BOOL &quot;&quot; FORCE)
+set(USE_RLSY ON CACHE BOOL &quot;&quot; FORCE)
+set(CMAKE_C_COMPILER mpicc CACHE STRING &quot;&quot;)
+set(CMAKE_C_FLAGS &quot;-O3 -funroll-loops -std=gnu99&quot; CACHE STRING &quot;&quot;)
+</code></pre>
+<p>Next issue the command <code>cmake -C initial.cmake ../.</code> - after this is complete output then issue the next command <code>make -j 8</code> - NB: the number refers to the number of processes on that machine. 
+The compiled code <code>aims.$VERSION.scalapack.mpi.x</code> will be in <code>build/</code> directory. </p>
+<h1 id="bash-submit-script"><a class="header" href="#bash-submit-script">Bash-submit script:</a></h1>
+<pre><code class="language-bash">#!/bin/bash
+#SBATCH --job-name=XXX
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=128
+#SBATCH --mem-per-cpu=3850
+#SBATCH --time=24:00:00
+#SBATCH --account=XXX
+
+module purge
+module load foss/2021b
+
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export MKL_DYNAMIC=FALSE
+
+ulimit -s unlimited
+
+bin='/Path/to/Executable/aims.${VERSION}.scalapack.mpi.x'
+
+srun $bin &gt; aims.out
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation-gpaw"><a class="header" href="#installation-gpaw">Installation GPAW</a></h1>
+<h2 id="before-installation"><a class="header" href="#before-installation">Before Installation</a></h2>
+<h3 id="modify-your-bashrc"><a class="header" href="#modify-your-bashrc">Modify your .bashrc</a></h3>
+<p>First, note that you need to do the compilation on the <code>/work</code> partition, so the executables will be available from the computing notes.</p>
+<p>You should also export the following to your <code>bashrc</code> (<code>user</code> is your username. <code>E635</code> needs to be adjusted according to whatever partition you have on Archer):</p>
+<pre><code class="language-bash">export PATH=/work/E635/E635/user/.local/bin:$PATH
+export PYTHONUSERBASE=/work/E635/E635/user/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+export PYTHONPATH=/work/E635/E635/user/.local:$PYTHONPATH
+</code></pre>
+<h3 id="the-installation-environment"><a class="header" href="#the-installation-environment">The Installation Environment</a></h3>
+<p>Load the necessary modules:</p>
+<pre><code class="language-bash">module restore PrgEnv-gnu
+module load cray-python
+</code></pre>
+<h2 id="installation-of-ase-and-libxc"><a class="header" href="#installation-of-ase-and-libxc">Installation of Ase and Libxc</a></h2>
+<ol>
+<li>
+<p>Install <code>ase</code> with <code>pip install ase</code> on the /work partition</p>
+</li>
+<li>
+<p>Install libxc by downloading the latest version from the libxc home (<code>git clone https://gitlab.com/libxc/libxc</code>). 
+You can either compile it with make: </p>
+<pre><code class="language-bash">./configure --prefix=/work/E635/E635/user/code_versions/GPAW/libxc/libxc-5.1.2 CC=cc CFLAGS=-fPIC FC=ftn
+</code></pre>
+<p>(<code>--prefix</code> is followed by the path where you want to install libex). If the <code>configure</code> file does not appear in your <code>libxc/</code> directory, you will need to run <code>autoreconf -i</code> to generate it (see the <code>README</code> file).</p>
+<pre><code class="language-bash">make -j 16
+make install
+</code></pre>
+<p>Alternatively, you can use cmake, which is useful in case you also want to use libxc in other python codes:</p>
+<pre><code class="language-bash">cmake -H. -Bobjdir -DCMAKE_INSTALL_PREFIX=/work/E635/E635/user/code_versions/GPAW/libxc/libxc-5.1.2/bin1
+cd objdir
+make -j16 install
+</code></pre>
+</li>
+</ol>
+<h2 id="installation-gpaw-1"><a class="header" href="#installation-gpaw-1">Installation gpaw</a></h2>
+<ol>
+<li>
+<p>git clone gpaw: <code>git clone -b 21.1.0 https://gitlab.com/gpaw/gpaw.git</code> (note: check if the version has changed, -b 21.1.0 is the current version as I'm writing this)</p>
+</li>
+<li>
+<p>In the gpaw directory, <code>cp siteconfig_example.py siteconfig.py</code></p>
+</li>
+<li>
+<p>Open siteconfig.py, set <code>scalapack =True</code> and comment out the next two lines. Add the following lines in the beginning of the document:</p>
+<pre><code class="language-python">library_dirs += ['/home/E635/E635/sjanke/code_versions/GPAW/libxc/libxc-5.1.2/lib']
+include_dirs += ['/home/E635/E635/sjanke/code_versions/GPAW/libxc/libxc-5.1.2/include']
+compiler = 'cc'
+mpicompiler = 'cc'
+mpilinker='cc'
+extra_compile_args =['-fPIC']
+</code></pre>
+</li>
+<li>
+<p>Build everything: <code>python setup.py build</code></p>
+</li>
+<li>
+<p>Install gpaw: <code>python setup.py install --user</code> (<code>--user</code> will install gpaw into you /work/E.../E.../user/.local directory)</p>
+</li>
+<li>
+<p>Get the tar-ball with the current PAW from the GPAW webpage and untar it in a sensible directory.</p>
+</li>
+</ol>
+<p>Your gpaw should now be ready to run.</p>
+<h1 id="the-jobsh-file"><a class="header" href="#the-jobsh-file">The job.sh file</a></h1>
+<p>The job file needs to include the following lines to be able to run the code:</p>
+<pre><code class="language-bash">module load epcc-job-env
+module load cray-python
+</code></pre>
+<p>The paths:</p>
+<pre><code class="language-bash">export PYTHONUSERBASE=/work/E635/E635/user/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+</code></pre>
+<p>And the directory of the untared PAWs:</p>
+<pre><code class="language-bash">export GPAW_SETUP_PATH=/work/E635/E635/user/gpaw_bin/GPAW_setup/gpaw-setups-0.9.20000
+</code></pre>
+<p>Finally, the submission line in the job.sh file would look like this:</p>
+<pre><code class="language-bash">srun --distribution=block:block --hint=nomultithread /work/E635/E635/user/.local/bin/gpaw python exe.py
+</code></pre>
+<h1 id="regression-tests"><a class="header" href="#regression-tests">Regression tests</a></h1>
+<p>To run the regression tests, copy into a convenient location or go into <code>gpaw/test</code> from you gpaw directory.</p>
+<p>Note that the regression tests are supposed to be run serially, so make sure you only have one core in your job.sh file (<code>#SBATCH --tasks-per-node=1</code>). The tests can be run with:</p>
+<pre><code class="language-bash">srun --distribution=block:block --hint=nomultithread pytest -v
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="installation-gpaw-2"><a class="header" href="#installation-gpaw-2">Installation GPAW</a></h1>
+<h2 id="before-installation-1"><a class="header" href="#before-installation-1">Before Installation</a></h2>
+<h3 id="modify-your-bashrc-1"><a class="header" href="#modify-your-bashrc-1">Modify your .bashrc</a></h3>
+<p>You should also export the following to your <code>bashrc</code> (<code>user</code> is your username. fasfddf):</p>
+<pre><code class="language-bash">export PATH=/home/s/user/.local/bin:$PATH
+export PYTHONUSERBASE=/home/s/user/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+export PYTHONPATH=/home/s/user/.local:$PYTHONPATH
+</code></pre>
+<h3 id="the-installation-environment-1"><a class="header" href="#the-installation-environment-1">The Installation Environment</a></h3>
+<p>Load the necessary modules:</p>
+<pre><code class="language-bash">module load foss/2020b
+module load Python
+</code></pre>
+<h2 id="installation-of-ase-and-libxc-1"><a class="header" href="#installation-of-ase-and-libxc-1">Installation of Ase and Libxc</a></h2>
+<ol>
+<li>
+<p>Install <code>ase</code> with <code>pip install ase</code> on the /work partition</p>
+</li>
+<li>
+<p>Install libxc by downloading the latest version from the libxc home (<code>git clone https://gitlab.com/libxc/libxc</code>). 
+You can either compile it with make: </p>
+<p><code>./configure --prefix=/home/s/user/code_versions/libxc-5.1.2 CC=cc CFLAGS=-fPIC FC=gfortran</code> (<code>--prefix</code> is followed by the path where you want to install libex). If the <code>configure</code> file does not appear in your <code>libxc/</code> directory, you will need to run <code>autoreconf -i</code> to generate it (see the <code>README</code> file).</p>
+<p><code>make -j 8</code></p>
+<p><code>make install</code></p>
+</li>
+</ol>
+<h2 id="installation-gpaw-3"><a class="header" href="#installation-gpaw-3">Installation gpaw</a></h2>
+<ol>
+<li>git clone gpaw: <code>git clone -b 21.1.0 https://gitlab.com/gpaw/gpaw.git</code> (note: check if the version has changed, -b 21.1.0 is the current version as I'm writing this)</li>
+<li>In the gpaw directory, <code>cp siteconfig_example.py siteconfig.py</code></li>
+<li>Open siteconfig.py, Add the following lines in the beginning of the document:</li>
+</ol>
+<pre><code class="language-python">library_dirs += ['/home/s/user/code_versions/libxc-5.1.2/lib']
+include_dirs += ['/home/s/user/code_versions/libxc-5.1.2/lib']
+compiler = 'gcc'
+mpicompiler = 'mpicc'
+mpilinker='mpicc'
+extra_compile_args =['-fPIC']
+</code></pre>
+<p>Set <code>scalapack = True</code> and modify within following if-statement <code>libraries += ['scalapack', 'openblas']</code>.</p>
+<ol start="4">
+<li>
+<p>Build everything: <code>python setup.py build</code></p>
+</li>
+<li>
+<p>Install gpaw: <code>python setup.py install --user</code> (<code>--user</code> will install gpaw into you ~/.local directory)</p>
+</li>
+<li>
+<p>Get the tar-ball with the current PAW from the GPAW webpage and untar it in a sensible directory.</p>
+</li>
+</ol>
+<p>Your gpaw should now be ready to run.</p>
+<h2 id="job-submit-script"><a class="header" href="#job-submit-script">Job submit script</a></h2>
+<p>The Job submit script for gpaw looks for example like this:</p>
+<pre><code class="language-bash">#!/bin/bash
+
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=4
+#SBATCH --mem-per-cpu=3850
+#SBATCH --time=00:05:00
+#SBATCH --account=xxx
+
+
+module purge
+module load foss/2020b
+module load Python/3.8.6
+
+
+export PYTHONUSERBASE=/home/s/user/.local
+export PATH=$PYTHONUSERBASE/bin:$PATH
+#Path to PAWs:
+export GPAW_SETUP_PATH=/home/s/user/code_versions/GPAW_paw/gpaw-setups-0.9.20000
+
+srun python exe.py
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="setup-julia-on-hpc-systems"><a class="header" href="#setup-julia-on-hpc-systems">Setup Julia on HPC systems</a></h1>
+<p>This guide is based upon the information directly provided by the <a href="https://julialang.org/">Julia website</a>. To make this guide more useful I will focus on HPC installation, though the setup is very similar across platforms.</p>
+<h2 id="download-and-install-julia"><a class="header" href="#download-and-install-julia">Download and install Julia</a></h2>
+<p>Julia can be directly obtained from the <a href="https://julialang.org/downloads/">website</a>. Get the current stable release and follow the <a href="https://julialang.org/downloads/platform/">platform specific instructions</a>.</p>
+<p>On Linux, you should use <code>wget</code> to download the tarball and extract using <code>tar -zxvf</code>. Next, you should ensure that the <code>julia</code> binary is added to the <code>PATH</code> environment variable.</p>
+<blockquote>
+<p>I keep two top level directories for storing programs, <code>~/programs</code> and <code>~/bin</code>, where <code>~/bin</code> is a directory added to the path within the <code>.bash_profile</code>. I put the <code>julia-x.y.z</code> directory inside <code>~/programs</code> and create a symbolic link (<code>ln -s ~/programs/julia-x.y.z/bin/julia ~/bin/julia</code>) to the <code>~/bin</code> directory. The advantage of this method is that only <code>~/bin</code> needs to be added to the <code>PATH</code>.
+Any time you need a new program you can follow this pattern and things remain organised.</p>
+</blockquote>
+<p>At this point you should be able to type <code>julia</code> and have the REPL appear before your very eyes.</p>
+<h2 id="running-scripts-on-a-cluster"><a class="header" href="#running-scripts-on-a-cluster">Running scripts on a cluster</a></h2>
+<p>Running Julia scripts works in the same way as for python, you set up a slurm script with all the necessary <code>#SBATCH</code> commands and include <code>julia my_script.jl</code>.</p>
+<p>Your slurm script might look a little something like this:</p>
+<pre><code class="language-bash">#!/bin/bash
+#SBATCH --ntasks=1
+#SBATCH --time=24:00:00
+#SBATCH --mem-per-cpu=2012
+
+julia my_script.jl
+</code></pre>
+<h2 id="packages-packages-packages"><a class="header" href="#packages-packages-packages">Packages, packages, packages...</a></h2>
+<p>Julia has a super handy package manager <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/"><code>Pkg</code></a>, it is important to understand how <code>Pkg</code> and the associated environments work in order to use code not provided within the Julia Base library. I highly recommend taking a quick look at the <a href="https://docs.julialang.org/en/v1/stdlib/Pkg/">documentation</a>.</p>
+<p>It is suggested that you create a new environment for each project and you should ensure this environment has been activated for your script. This can be done by running julia with <code>julia --project=/path/to/myenv my_script.jl</code>.
+Now your script will be able to access any package that you have installed into your project environment.</p>
+<h2 id="parallelism"><a class="header" href="#parallelism">Parallelism</a></h2>
+<p>The list of <a href="https://docs.julialang.org/en/v1/manual/command-line-options/">command-line options</a> mentions the <code>-t</code> and <code>-p</code> options. These allow the specification of the number of threads and processes to use.</p>
+<h2 id="things-to-add"><a class="header" href="#things-to-add">Things to add</a></h2>
+<p>If anyone wants anything extra included in this guide, feel free to add it or ask me (james). At some point I will merge the existing VScode guide I made with this one.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="contributing-to-nqcd"><a class="header" href="#contributing-to-nqcd">Contributing to NQCD</a></h1>
+<p align="right">
+  <a href="https://nqcd.github.io/NQCDynamics.jl/stable/">
+    <img src="https://github.com/NQCD/NQCDLogo/blob/main/images/logo_with_text.png" alt="NQCDynamics.jl logo"
+         title="NQCDynamics.jl" align="right" height="150"/>
+  </a>
+</p>
+<p>This page describes the process of contributing to NQCD for members of the maurergroup.
+In particular, it focuses on the case where your contributions should be kept private until ready for publication.
+For general guidelines for contributing to open source Julia packages, refer to the <a href="https://github.com/SciML/ColPrac">Contributor's Guide</a> from the SciML organisation.</p>
+<h2 id="nqcd-overview"><a class="header" href="#nqcd-overview">NQCD overview</a></h2>
+<p>The components of NQCD are distributed over multiple repositories hosted within the <a href="https://github.com/NQCD">NQCD organisation on GitHub</a>.
+Most of these repositories are <a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility">public</a>,
+which means anyone can see all of the branches pushed to the remote repository.
+Often we want to keep our developments private whilst we work on them which means we cannot use the public repositories to store our development work.</p>
+<h2 id="handling-private-development"><a class="header" href="#handling-private-development">Handling private development</a></h2>
+<p>There are two options that allow us to develop in private. If you are not sure which is more appropriate for your feature, feel free to ask.</p>
+<h3 id="1-private-add-on-packages"><a class="header" href="#1-private-add-on-packages">1. Private add-on packages</a></h3>
+<p>The modular nature of Julia and the NQCD project allows us to split up the code into multiple packages without any downsides. In fact, it is often advantageous as it allows you to add as many dependencies as you like and you are able to host your own test sets.
+This set up is desirable when developing a new model built on top of <a href="https://github.com/NQCD/NQCModels.jl">NQCModels.jl</a> or an interface that requires extra dependencies or is relatively complex.
+To do this, simply <a href="https://docs.github.com/en/get-started/quickstart/create-a-repo">create a new GitHub repository</a> and generate a new Julia package.
+For this, I recommend using <a href="https://github.com/invenia/PkgTemplates.jl">PkgTemplates.jl</a>.
+Examples of the add-on setup include: <a href="https://github.com/NQCD/TullyNOAu111.jl">TullyNOAu111.jl</a> and <a href="https://github.com/NQCD/NNInterfaces.jl">NNInterfaces.jl</a>, along with many of the packages you can find <a href="https://github.com/NQCD">here</a>.
+Technically, you are free to host these packages wherever you like, either within NQCD, maurergroup or even on your own profile.
+Though the best place is probably NQCD so we can manage it more easily.
+The key is that you make sure the visibility of the repository is set to private.</p>
+<h3 id="2-private-forks-of-public-repositories"><a class="header" href="#2-private-forks-of-public-repositories">2. Private &quot;forks&quot; of public repositories</a></h3>
+<p>If you development is more suitable within one of the existing public packages, then we must employ an alternate strategy.
+We cannot publish our changes to the public repository, so we must create a private copy of the repository.
+Usually when you want to create a copy of a repository, you would <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">fork the repository</a> which has the advantage of closely linking the repositories automatically, making it easy to synchronise and publish changes.
+However, GitHub does not allow for private forks of public repositories which means we must find another way.
+Fortunately, GitHub provides instructions for how to <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository">duplicate a repository</a>. We can use this to create a private copy of the public repository and manually handle the synchronisation between them.</p>
+<h4 id="development-procedure"><a class="header" href="#development-procedure">Development procedure</a></h4>
+<p>The development of a private feature for a public repository is as follows:</p>
+<ol>
+<li>Create a private copy of the main repository if it does not already exist. (<a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/duplicating-a-repository">Duplicating a repository</a>)</li>
+<li>Create a new branch off of <code>main</code> named <code>{feature-name}-staging</code>.
+This will act as the effective <code>main</code> branch for your new development and will never be merged into the actual <code>main</code>.</li>
+<li>To work on your feature, you should create another branch off of <code>{feature-name}-staging</code> and open up a <a href="https://github.blog/2019-02-14-introducing-draft-pull-requests/">draft pull request</a>.</li>
+<li>Commit as many changes as you like to your branch. These changes will appear in the pull request and the automated tests will run.</li>
+<li>Merge your development branch into <code>{feature-name}-staging</code> when you are ready.</li>
+<li>Repeat steps 3, 4 and 5 until your feature is complete.</li>
+<li>When ready for public release, push your <code>{feature-name}-staging</code> branch to the public repository and open a pull request.
+This can be merged straight away since it should be in perfect condition by this stage.</li>
+</ol>
+<h4 id="extra-considerations"><a class="header" href="#extra-considerations">Extra considerations</a></h4>
+<p>The <code>main</code> branch of the private repository should exactly copy and be kept in sync with the <code>main</code> branch of the public repository. This can be done using GitHub actions or manually.
+The private <code>main</code> branch acts only as a copy of the public repository so it is simpler to keep private developments up to date with the public repository.
+Periodically, you should merge/rebase <code>main</code> into your <code>{feature-name}-staging</code> branch to ensure your developments do not fall out of sync with other changes.</p>
+<p>It is recommended that the steps 3-6 are comprised of many small branches with detailed discussion in each pull request. This way we can keep things moving and are less likely to end up out of sync with other developments.</p>
+<p>This process assumes that each feature is independent and the features do not interact with one another.
+For most cases this will be true so it should be possible to have many features with their own <code>{feature-name}-staging</code> branches all in development at the same time.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="hosting-binary-packages-with-binarybuilderjl"><a class="header" href="#hosting-binary-packages-with-binarybuilderjl">Hosting binary packages with BinaryBuilder.jl</a></h1>
+<p>This guide will describe the process I followed to create <a href="https://github.com/maurergroup/H2AgModel_jll.jl">H2AgModel_jll.jl</a>.
+The <a href="https://docs.binarybuilder.org/stable/">BinaryBuilder.jl docs</a> do a pretty job of explaining what to do but here I'll provide a streamlined experience.</p>
+<p>The whole process involves simply creating a <code>build_tarballs.jl</code> script and running it from the command line with:</p>
+<p><code>julia build_tarballs.jl --verbose --debug --deploy=&quot;username/repo&quot;</code></p>
+<p>Many examples of these scripts are available in the <a href="https://github.com/JuliaPackaging/Yggdrasil">Yggdrasil repo</a> but direct reference to this
+is not always very helpful.</p>
+<p>The script I created and will be referencing can be seen <a href="https://github.com/maurergroup/ML-model-repository/blob/master/H2_on_Ag111/build_tarballs.jl">here</a>.</p>
+<p>Things to include in the script:</p>
+<ol>
+<li><code>name</code> - This is the name of the package.</li>
+<li><code>version</code> - The version</li>
+<li><code>sources</code> - Location of the source code that we will compile. In the case of a <code>GitSource</code>, the string of letters you see should be
+taken directly from a github commit. You can see this in the top right on Github whenever you are viewing a commit.
+We reference a specific commit to ensure it doesn't change as the branch gets updated.</li>
+<li><code>script</code> - The script executed in order to compile the code. Typically this will just run the make file with <code>make</code>, but in my script I have explicitly written everything out. Note that I have moved the outputs into the <code>${libdir}</code>, since I have compiled shared libraries. BinaryBuilder.jl automatically provides a few environment variables that you can use, these include all the ones I have used, and you can find the rest in the docs.</li>
+<li><code>platforms</code> - Determines the platforms to compile on, usually we will only be interested in the linux x86_64 platform. Note that we also use the <code>expand_gfortran_versions</code> function, this means we will compile with three different versions of <code>gfortran</code> for compatibility reasons.
+I found that I could not put too many options for platforms as you need lots of storage space to run the docker environments for many platforms.</li>
+<li><code>products</code> - Lists the output libraries and binaries, here I have compiled two libraries and include them both here.
+I also have some <code>.txt</code> files used by the libraries but it's not necessary to include those here.</li>
+<li><code>dependencies</code> - Labels the library dependencies needed to compile the code. It seems this <code>CompilerSupportLibraries_jll</code> is always needed
+for fortran code.</li>
+<li><code>build_tarballs</code> - Executes the build. </li>
+</ol>
+<p>Then finally all you have to do is run the script with the command I mention at the top. It takes quite a while and has to download quite a lot of stuff but should proceed without issue. You will likely have to provide github authorisation which you can do easily by adding a token.
+You can generate a token <a href="https://github.com/settings/tokens">here</a> which you can add to <code>~/.julia/config/startup.jl</code> with the line <code>ENV[&quot;GITHUB_TOKEN&quot;] = token</code>.</p>
+<p>After the script runs, it will automatically upload the package to the specified `--deploy=&quot;user/repo&quot;. To make a new version, just update the version number in the script and run it again.</p>
+<p>Hopefully this is everything you need, check the BinaryBuilder.jl docs for more info. They provide information on how to use your new _jll package and give other options for the sources, platforms etc.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="pymol-api-tutorial"><a class="header" href="#pymol-api-tutorial">Pymol API tutorial</a></h1>
+<p>Pymol can be imported and called from python code. This allows scripting and reproducability, without having to mess around with clunky GUIs that belong in the 90s. </p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<p>Information given here: https://pymol.org/2/<br />
+Conda installation is available.<br />
+License free for academia, available here: https://pymol.org/edu/?q=educational/  They will email you a download link. Open up the GUI and it will request the license file, just give it that .lic you downloaded.</p>
+<h2 id="basic-use"><a class="header" href="#basic-use">Basic use</a></h2>
+<p>First we need to import pymol. If this doesn't work, check your installation.<br />
+<code>import pymol</code></p>
+<p>Now we need to load Pymol, easiest way is to load a prepared geometry file. Pymol only accepts certain file types, I usually use XYZ</p>
+<p><code>​pymol.finish_launching(['pymol', '-qc'])</code><br />
+​
+<code>pymol.cmd.load('geometry.xyz')</code></p>
+<h3 id="visualizing-atoms"><a class="header" href="#visualizing-atoms">Visualizing atoms</a></h3>
+<p>Here are some basic visualizaton options, to show the atoms we are looking at:</p>
+<p>Show atoms as spheres:<br />
+<code>pymol.cmd.show('spheres')</code></p>
+<p>Use a cartoon representation:<br />
+<code>pymol.cmd.show('cartoon')</code></p>
+<p>Set sizes for different elements:<br />
+<code>pymol.cmd.set('sphere_scale', 0.27,'(elem N, elem O)')</code><br />
+<code>pymol.cmd.set('sphere_scale', 0.9,'(elem Au)')</code></p>
+<p>Show sticks for bonds:<br />
+<code>pymol.cmd.show('sticks')</code></p>
+<p>Give those sticks a specific radius:<br />
+<code>pymol.cmd.set('stick_radius',0.15)</code></p>
+<p>Set specific colours for different elements:<br />
+<code>pymol.cmd.color('0x6495ED', '(elem N)')</code><br />
+<code>pymol.cmd.color('0xF08080', '(elem O)')</code></p>
+<p>Set named preset colour for specific element:<br />
+<code>pymol.cmd.color('gold', '(elem Au)')</code></p>
+<h3 id="rotation"><a class="header" href="#rotation">Rotation</a></h3>
+<p>Easy:<br />
+<code>pymol.cmd.turn('x',70)</code><br />
+<code>pymol.cmd.turn('z',180)</code></p>
+<h3 id="preparing-lighting"><a class="header" href="#preparing-lighting">Preparing lighting</a></h3>
+<p>Many options:</p>
+<pre><code class="language-python">pymol.cmd.set('light_count',8)
+pymol.cmd.set('spec_count',1)  
+pymol.cmd.set('shininess', 1)
+pymol.cmd.set('specular', 0.55)  
+pymol.cmd.set('ambient',0.3)  
+pymol.cmd.set('direct',0)  
+pymol.cmd.set('reflect',1.)  
+pymol.cmd.set('antialias',2.)  
+pymol.cmd.set('ray_shadow_decay_factor', 0.1)
+pymol.cmd.set('ray_shadow_decay_range', 2)
+pymol.cmd.set('ray_trace_mode',3)
+pymol.cmd.set('sphere_mode',5)
+</code></pre>
+<h3 id="rendering-image"><a class="header" href="#rendering-image">Rendering image</a></h3>
+<p><code>pymol.cmd.ray(1200,800)</code></p>
+<p><code>basename = 'fig2'</code><br />
+<code>pymol.cmd.png('./'+basename + '.png',width=1200,height=800,dpi=400)</code><br />
+<code>print('file written')</code></p>
+<h3 id="quit"><a class="header" href="#quit">Quit</a></h3>
+<p><code>pymol.cmd.quit()</code></p>
+<h2 id="example-script"><a class="header" href="#example-script">Example script</a></h2>
+<p><a href="https://github.com/maurergroup/grouptools/blob/master/pymol_scripts/render.py">example_script.py</a></p>
+<h2 id="pymol-wiki-for-commands-etc"><a class="header" href="#pymol-wiki-for-commands-etc">Pymol wiki (for commands etc.)</a></h2>
+<p>https://pymolwiki.org/index.php/Main_Page</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script type="text/javascript">
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </body>
+</html>

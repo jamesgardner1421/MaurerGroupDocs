@@ -1,0 +1,289 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>CASTEP XPS and NEXAFS Tutorial - MaurerGroupDocs</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../home.html">MaurerGroupDocs</a></li><li class="chapter-item expanded affix "><li class="part-title">Spectroscopy</li><li class="chapter-item expanded "><a href="../spectroscopy/castep-xps-nexafs.html" class="active"><strong aria-hidden="true">1.</strong> CASTEP XPS and NEXAFS Tutorial</a></li><li class="chapter-item expanded affix "><li class="part-title">Compilation guides</li><li class="chapter-item expanded "><a href="../compilation/aims-avon.html"><strong aria-hidden="true">2.</strong> FHI aims on Avon</a></li><li class="chapter-item expanded "><a href="../compilation/aims-sulis.html"><strong aria-hidden="true">3.</strong> FHI aims on Sulis</a></li><li class="chapter-item expanded "><a href="../compilation/gpaw-archer2.html"><strong aria-hidden="true">4.</strong> GPAW on Archer2</a></li><li class="chapter-item expanded "><a href="../compilation/gpaw-sulis.html"><strong aria-hidden="true">5.</strong> GPAW on Sulis</a></li><li class="chapter-item expanded affix "><li class="part-title">Julia tutorials</li><li class="chapter-item expanded "><a href="../julia/julia-setup.html"><strong aria-hidden="true">6.</strong> Setup Julia on HPC systems</a></li><li class="chapter-item expanded "><a href="../julia/nqcd.html"><strong aria-hidden="true">7.</strong> Contributing to NQCD</a></li><li class="chapter-item expanded "><a href="../julia/hosting-jll.html"><strong aria-hidden="true">8.</strong> Hosting binary packages with BinaryBuilder.jl</a></li><li class="chapter-item expanded affix "><li class="part-title">Visualisation and rendering</li><li class="chapter-item expanded "><a href="../visualisation/pymol.html"><strong aria-hidden="true">9.</strong> Pymol API tutorial</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">MaurerGroupDocs</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="castep-xps-and-nexafs-tutorial"><a class="header" href="#castep-xps-and-nexafs-tutorial">CASTEP XPS and NEXAFS Tutorial</a></h1>
+<p>All tools needed to generate XPS and NEXAFS spectra can be found on the Maurer Group Github in the 'grouptools/NEXAFS_scripts' repository. Included in this are several tools to help in this process:</p>
+<ul>
+<li><em>autoscript.py</em> - Python script which will generate all XPS and NEXAFS input files</li>
+<li><em>core_excitation.py</em> - Code in which the autoscript will use</li>
+<li><em>castep_get_XPS_energies.py</em> - Python script to calculate the XPS binding energies</li>
+<li>_plot_xps.py - Python script to sum up XPS peaks and broaden into a spectrum</li>
+<li><em>execute_molpdos.sh</em> - Bash script to run MolPDOS for all angles and atoms</li>
+<li><em>plot_nexafs.py</em> - Python script to process MolPDOS output data into a broadened NEXAFS spectra</li>
+<li><em>plot_mo.py</em> - Python script to process MolPDOS output data into MO orbital spectra</li>
+</ul>
+<h2 id="1-set-up"><a class="header" href="#1-set-up">1. Set-Up</a></h2>
+<p>To begin with, a suitable file system, naming convention, and some initial ground-state calculations are needed to help with the process. In CASTEP all files, input, and output have the same seedname so for our system we will use a '<em>molecule_metal</em>' configuration. This is important to implement right from the beginning as scripts used later will use this convention. The '<em>molecule</em>' is simply just the investigated molecule, e.g. azulene, benzene, pyridine, and the '<em>metal</em>' is the metal substrate, e.g. Cu, Au, or simply gas if no metal surface is present. So for example in this tutorial, we will be looking at azulene on a silver surface so files would use <em>azulene_Ag</em> as the seedname to make files such as <em>azulene_Ag.cell</em> and will continue with this tutorial using this system.</p>
+<p>Next, to organise the filing system to use, once all set up this should contain:</p>
+<ul>
+<li>Input and output files from the initial ground-state calculation</li>
+<li><strong>freestand</strong> directory (Directory containing files from the calculation of the free-standing overlayer, only needed when including a metal surface)</li>
+<li><strong>XPS</strong> directory (Directory generated by autoscript.py)</li>
+<li><strong>NEXAFS</strong> directory (Directory generated by autoscript.py)</li>
+</ul>
+<p>and should end up looking something like this.</p>
+<img src="../images/spectroscopy/setup.png">
+<p>The initial singlepoint ground-state calculation should be the first to be completed. The reason for this can be for several reasons but the main one is to work out the ground-state total energy that will be used later to calculate the XPS binding energies. It is then important to make sure the settings you are using for this are sufficient and will be carried on through the process. If this is your first time using CASTEP or do not know the pseudopotential for an element, this step can be used to generate on-the-fly pseudopotentials and obtain the pseudopotential strings for all elements in the calculation. If you are already well versed in CASTEP and already know which pseudopotentials you will use, you can set the in from the start here and skip this.</p>
+<p>If you're investigating a molecule on a metal surface rather than a gas-phase molecule, you will need to perform a second singlepoint calculation. This will be carried out in the <strong>freestand</strong> directory. In here you should copy over the <em>.cell</em> and <em>.param</em> files from the ground-state but rename them <em>azulene_free</em> to describe correctly and avoid confusion and required for a later step. In this directory you will need to open up the <em>.cell</em> file and delete the metal surface, leaving only the molecule, which is called the free-standing overlayer. This step is carried to generate the <em>azulene_free.check</em> file which is used later on in the NEXAFS calculations for the MO projection. If your system is a gas-phase system (no metal surface) this step and be skipped as the .check file that will be used will be from the ground-state calculation previously ran so for this would be the <em>azulene_gas.check</em> file.</p>
+<p>To acquire the pseudopotential string if needed, open any of the <em>.usp</em> files. Here we will use the <em>C_C18_PBE_OTF.usp</em> file. At the top of the file should give you all the information about the pseudopotential used and near the bottom of the box will be the definition string for you to copy to use for the XPS and NEXAFS calculations. In this case for carbon, the string is <code>2|1.4|10|12|13|20:21(qc=7)</code>, record this down and do the same for each element in the system to use in the next step.</p>
+<img src="../images/spectroscopy/pseudopotential_string.png" width="500">
+<h2 id="2-generation-of-xps-and-nexafs-inputs-using-autoscriptpy"><a class="header" href="#2-generation-of-xps-and-nexafs-inputs-using-autoscriptpy">2. Generation of XPS and NEXAFS inputs using autoscript.py</a></h2>
+<p>To generate the XPS and NEXAFS directories with all the input files needed for each individual carbon atom you need to set up a directory with:</p>
+<ul>
+<li><em>autoscript.py</em></li>
+<li><em>core_excitation.py</em></li>
+<li><em>Geometry file of the system</em></li>
+</ul>
+<img src="../images/spectroscopy/autoscript.png">
+<p>The <em>core_excitation.py</em> file can be left alone and doesn't need to be altered. To use this code all you need to do is open up the <em>autoscript.py</em> file and change the required fields and set the settings you want in the calculation, overall, this will be the same as the ground-state calculations with a few exceptions which will be explained. At the top the first thing to alter is the <code>input_name</code>, the geometry file to read in and the <code>output_name</code> you want the script to use as the CASTEP seedname. In this case, these two are basically the same and would be <code>azulene_Ag.cell</code> and <code>azulene_Ag</code> but through ASE, you can read in any file format you want if needed.</p>
+<p>Next is where you need to set the elements and pseudopotential strings you save before. Here you can create any number you need and copy in the pseudopotential strings. For the atoms you want to study the XPS for you will need to copy in the pseudopotential string twice again but this time adding in the electron configuration to include either a full core-hole (XPS) or half core-hole (NEXAFS). This is done starting at line 81, where for a C1s calculation we put in <code>element='C'</code> and <code>pspots='2|1.4|10|12|13|20:21{1s1,2s2,2p3}(qc=7)'</code> with the full core-hole in the <code>xce</code> and the same again for <code>nce</code> but this time with a half core hole.</p>
+<img src="../images/spectroscopy/core_holes.png">
+<p>Also, starting on line 100 is where the pseudopotential strings you stated at the top are written out to the .cell files and you need to add/change to match with the elements you have, this will include adding in any new lines for the number of elements and adding this line to the print line for both XPS and NEXAFS sections. In the default script included is an example of how a new line if a 4th element nitrogen is needed and if a gas-phase calculation is begin run then the metal and line3 would need to be commented out.</p>
+<img src="../images/spectroscopy/write_pseudo.png">
+<p>The final part is to set the parameters you want for the calculation. Under the CASTEP calculators <code>QM1</code> and <code>QM2</code> you should set <code>castep_command</code> to the path of where your CASTEP binary is located. Next in QM1 choose and set all the keywords you want to include in the XPS calculation. Then if any settings need to be changed for the NEXAFS calculation add these to <code>QM2</code>. Most likely this will only need to be <code>nextra_bands</code> and <code>elnes_nextra_bands</code>. This is due to only the first needed for XPS and usually, only a low number is needed and any higher is a waste computationally. For the NEXAFS calculations the second term is needed and to generate a nice full spectrum without it ending too soon a much larger number of bands are needed and for the MolPDOS analysis, both <code>nextra_bands</code> and <code>elnes_nextra_bands</code> need to be the same value in the NEXAFS case. So set this value to a higher value(trial and error/learning will help with picking a suitable number).</p>
+<p>To get a general idea of what are suitable settings you will need to change and use, <code>cut_off_energy=450</code> is suitable enough for most systems, a sanity check to make sure you have a suitable value is to look at the <em>.usp</em> files for all elements and at the top of the file are cut-off values and a level of accuracy they give, make sure all elements are at least FINE, <code>kpoints_mp_grid='6 6 1'</code> is sufficient for metal surface structures and only <code>'1 1 1'</code> is needed for gas-phase. For XPS calculations <code>nextra_bands=100</code> is more than enough. For <code>elnes_nextra_bands</code> this depends on the metal used and for gas-phase as well the size of the unit cell. The larger the unit cell the higher number needed along with higher atomic number metals, a good starting point would probably be <code>1000</code>.</p>
+<p>Finally, if a MolPDOS analysis is needed you need to set a few other keywords for this. The first is the molecular orbitals you want to project out. Here you can give as many MO states as you want but the key ones you want are the frontier states around the HOMO and LUMO. To get the correct numbers of the HOMO and LUMO you can simply sum up all the electrons in the valence shell of all atoms in the molecule and divide by two. For hydrogen this is 1, carbon is 4, nitrogen 5 etc. The halved number will correspond to the HOME state. So in this case for azulene, C10H8 has a total of 48 valence electrons, so state 24 is the HOMO. You would ideally like a range above and below the bandgap with more unoccupied states than occupied. In the script change the range in MO to the required range and secondly is the reference .check file needed. This will be the azulene_free.check so change this to the right name. For a gas-phase calculation, I would suggest something along the lines of azulene_ground.check as keeping the same name as it is already would not work. Last is to comment out the <code>assert 0</code> on line 130 to run the part of the script that will write these settings out.</p>
+<p>Once all of that is done it is time to run <em>autoscript.py</em>, you should see two directories called XPS and NEXAFS have been created. These should contain a directory for each carbon atom in your molecule labeled with a number, this number just corresponds to the order it appears in the input geometry file. If you look into these directories they should contain the two CASTEP input files <em>.cell</em> and <em>.param</em>. You can easily copy the parameter file over to the main folder, set the charge to zero and use it for the ground state calculation.</p>
+<img src="../images/spectroscopy/run_autoscript.png">
+<p>You will notice that running <em>autoscript.py</em> will give a warning that a pseudopotential path has not been given to the calculator, this is fine and is not a problem as we are specifically stating our pseudopotentials out and not using a database which is what the code is asking for. This function can be used to point to a database of pseudopotentials which is not implemented to keep full control over the pseudopotentials we want to use.</p>
+<h2 id="3-setting-up-and-running-jobs"><a class="header" href="#3-setting-up-and-running-jobs">3. Setting up and running jobs</a></h2>
+<p>Now you can copy over the contents of your newly created <strong>XPS</strong> and <strong>NEXAFS</strong> folders back to your main folder and finally set a few things left before copying over the files to your chosen cluster to run them.</p>
+<p>The first would be to create your reference <em>azulene_free.check</em> file needed for the MolPDOS calculation. Once this is done this file then needs to be copied into every atom directory in the NEXAFS directory. If a gas-phase calculation is being performed this will instead be the <em>azulene_gas.check</em> created from the ground state calculation and changed to be called <em>azulene_ground.check</em>. Also, what is needed is a .deltascf file which gives the parameters needed for the MolPDOS calculation, here we point the code to the <em>azulene_free.check</em> file and list the specific states that we want to project out.</p>
+<img src="../images/spectroscopy/deltascf_file.png" width="500">
+<p>Once done each atom folder should look like this.</p>
+<img src="../images/spectroscopy/nexafs_setup.png">
+<p>All that's is left is to run all of the XPS and NEXAFS jobs. In regards to the number of nodes and walltime needed for the calculations, the XPS calculations will be similar to the length of the ground-state calculation. The NEXAFS will require more memory (nodes) and longer walltimes and the best practice would be to run only one calculation first to gauge this and then use the settings for all of the rest. With time a better understanding of the requirements needed will be able to be learned. Once done transfer the data back to your local machine and for NEXAFS calculations you should see the usual outputs along with a <em>.molpdos_state_x_1</em> file for all MO state you gave earlier.</p>
+<img src="../images/spectroscopy/molpdos_state.png">
+<h2 id="4-obtaining-and-plotting-xps"><a class="header" href="#4-obtaining-and-plotting-xps">4. Obtaining and plotting XPS</a></h2>
+<p>The first task that needs to be done after all the calculations are done is to calculate the XPS binding energies for each atom and plot the spectrum, to do this we will use the two scripts:</p>
+<ul>
+<li><em>castep_get_xps_energies.py</em> </li>
+<li><em>plot_xps.py</em></li>
+</ul>
+<p>The <em>castep_get_xps_energies.py</em> python script should be placed in the <strong>XPS</strong> directory and then the necessary parameters have to be changed in the script manually. These will be the <code>filename</code>, <code>element</code> and <code>atoms</code> to the required settings that match the system. Once this is done, the script can be executed and it will read the groud-state and excited-state energies for each atom and calculate and apply the pseudopotential correction, and finally print out the binding energies into an XPS_peaks.txt file.</p>
+<img src="../images/spectroscopy/castep_get_xps_energies.png">
+<img src="../images/spectroscopy/getting_xps_energies.png">
+<p>With the XPS binding energies now written out, the <em>plot_xps.py</em> script can be used to take the individual shifts and sum them all up and plot them into a broadened spectrum. By commenting out the <code>assert 0</code> command on line 87 the script will broaden each individual atom peak and create text files for each atom which can be plotted along with the full spectrum to show the breakdown of the spectrum.</p>
+<h2 id="5-nexafs-post-processing-and-molpdos"><a class="header" href="#5-nexafs-post-processing-and-molpdos">5. NEXAFS Post-Processing and MolPDOS</a></h2>
+<p>Now to run the NEXAFS post-processing we need a settings file with all the information needed, this will be a <em>.molpdos file</em>. In this file, you will see a variety of settings needed to calculate the NEXAFS and MO data. The most significant ones that need to be changed are:</p>
+<ul>
+<li><code>nexafs_theta</code> - The theoretical X-ray incidence angle you want to calculate for</li>
+<li><code>nexafs_xshift</code> - The XPS binding energy corresponding to the same carbon, will be done automatically by the script</li>
+<li><code>nexafs_state</code> - Which atomic species you want to calculate for, you will need to only change the first number. This number will be +1 the number of elements in the system, as for this example, is <code>4 1 1 1</code>. 4 because the first element is hydrogen, second is carbon, third is silver and the last is the new excited carbon, <code>C:exc</code>, we defined (this element will always be the last one in the list).</li>
+</ul>
+<p>If you want to project the NEXAFS transitions onto molecular states of a reference system, you also have to set:</p>
+<ul>
+<li><code>modos_state</code> - Set the corresponding states to exactly the same orbital values you selected previously for the calculation</li>
+</ul>
+<img src="../images/spectroscopy/molpdos_file.png" width="500">
+<p>To run the MolPDOS post-processing you first need to have the MolPDOS binary located in your path and this will use the <em>execute_molpdos.sh</em> script to first add the correct nexafs_xshift to the right atoms and then run the MolPDOS binary for each angle you want. So these need to be set at the top of the script, change the first <code>Array</code> to the correct values of the atoms and the AngleArray to the incidence angles you want to calculate. The change the molecule, metal and element to the correct setting and then run the script.</p>
+<p>This script will take some time to run and finish for all of the atoms and angles but will write out the progress of the script into the terminal to show you the progress. To not take up the terminal nohup can be used to run the script in the background. Once done this will have to generate a new folder in each of the atoms folders for each angle chosen and be filled with a whole host of <em>.dat</em> files.</p>
+<img src="../images/spectroscopy/run_molpdos.png">
+<img src="../images/spectroscopy/finish_molpdos.png">
+<p>These should be organised into a corresponding directory labeled based on the theta value, for example, <strong>t25</strong>. Repeat this MolPDOS process for each incidence angles you want to simulate for and for all carbon atoms. Normal practice would be for 00, 25, 53, and 90 degrees. Your directory for all carbons should look like this.</p>
+<img src="../images/spectroscopy/molpdos_files.png">
+<p>You should use an automated script for this procedure. Provided is the <em>auto_molpdos.sh</em> script which should be executed in the NEXAFS directory, It reads the <em>C_XPS_peaks.txt</em> file (copy from XPS to the NEXAFS directory), changes a generic <em>.molpdos</em> file to match the desired angle and XPS binding energies, goes to the corresponding carbon directory, and executes the script, and moves the resulting data in the respective folders.</p>
+<h2 id="6-summation-and-broadening-of-the-nexafs-spectra"><a class="header" href="#6-summation-and-broadening-of-the-nexafs-spectra">6. Summation and broadening of the NEXAFS spectra</a></h2>
+<p>The final step left to do is to take all of the data produced through the MolPDOS post-processing, sum the contributions from all carbon atoms and applying a broadening function to create the NEXAFS spectra. For this you will need the python scripts:</p>
+<ul>
+<li><em>plot_nexafs.py</em></li>
+<li><em>plot_mo.py</em></li>
+</ul>
+<p>These scripts should be placed in the <strong>NEXAFS</strong> directory and change the corresponding settings inside the script to match you data. These are listed into different groups, the first is <code>Broadening Parameters</code>. These are the settings of the pseudo-Voight broadening scheme that will be applied, the settings in there are the default carbon settings that usually work best but they can be modified to create the best spectra. If a different element is being studied N or O K-edge then the <code>xstart</code> and <code>xstop</code> values will have to be changed to fall in the energy range of the chose element. The next group are the <code>System Settings</code>, these are the main settings to change. Here we have the <code>molecule</code> and <code>metal</code> variables to change to the name of your system, and then also the <code>element</code>. We have the <code>n_type</code> which will decide what NEXAFS spectra you want to generate, a number between 1-4, default would be 4, the script shows what each number performs. <code>angle</code> you will set to the same angles you selected when running MolPDOS, so in this case <code>'t00', 't25', 't53', t90'</code>. Then the <code>numbers</code> will be the number range of your atom directories, here 48 to 57, and the atom number, this is as described before the value the excited element comes in the list of all elements, always the last number.</p>
+<img src="../images/spectroscopy/plot_nexafs_settings.png">
+<p>Run this script and it will generate (for each angle) a <em>*deltas.txt</em>, containing the summed up raw data of all NEXAFS transitions, and a _*spectrum.txt' file with the fully calculated broadened spectrum. If the individual carbon contributions of the NEXAFS spectrum is desired then comment out the <code>assert 0</code> command on line 122 and this will generate a separate <em>.txt</em> file for each individual atom at each angle.</p>
+<img src="../images/spectroscopy/plot_nexafs.png">
+<p>The last step would be to output the individual MO contributions, these settings to change are the exact same as before for the NEXAFS script but now with one more which is <code>MO</code>, which will be the list of MO orbitals you choose to project out. Run the script again and you will receive a <em>*.txt</em> file of the delta peaks and the broadened orbital projection for all orbitals and angles. This can now be plotted with its corresponding NEXAFS spectra to view its contributions.</p>
+<img src="../images/spectroscopy/plot_mo.png">
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../home.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../compilation/aims-avon.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../home.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../compilation/aims-avon.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
