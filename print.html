@@ -82,7 +82,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="home.html">MaurerGroupDocs</a></li><li class="chapter-item expanded affix "><li class="part-title">Spectroscopy</li><li class="chapter-item expanded "><a href="spectroscopy/castep-xps-nexafs.html"><strong aria-hidden="true">1.</strong> CASTEP XPS and NEXAFS Tutorial</a></li><li class="chapter-item expanded affix "><li class="part-title">Compilation guides</li><li class="chapter-item expanded "><a href="compilation/aims-avon.html"><strong aria-hidden="true">2.</strong> FHI aims on Avon</a></li><li class="chapter-item expanded "><a href="compilation/aims-sulis.html"><strong aria-hidden="true">3.</strong> FHI aims on Sulis</a></li><li class="chapter-item expanded "><a href="compilation/gpaw-archer2.html"><strong aria-hidden="true">4.</strong> GPAW on Archer2</a></li><li class="chapter-item expanded "><a href="compilation/gpaw-sulis.html"><strong aria-hidden="true">5.</strong> GPAW on Sulis</a></li><li class="chapter-item expanded affix "><li class="part-title">Julia tutorials</li><li class="chapter-item expanded "><a href="julia/julia-setup.html"><strong aria-hidden="true">6.</strong> Setup Julia on HPC systems</a></li><li class="chapter-item expanded "><a href="julia/nqcd.html"><strong aria-hidden="true">7.</strong> Contributing to NQCD</a></li><li class="chapter-item expanded "><a href="julia/hosting-jll.html"><strong aria-hidden="true">8.</strong> Hosting binary packages with BinaryBuilder.jl</a></li><li class="chapter-item expanded affix "><li class="part-title">Visualisation and rendering</li><li class="chapter-item expanded "><a href="visualisation/pymol.html"><strong aria-hidden="true">9.</strong> Pymol API tutorial</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="home.html">MaurerGroupDocs</a></li><li class="chapter-item expanded affix "><li class="part-title">Spectroscopy</li><li class="chapter-item expanded "><a href="spectroscopy/castep-xps-nexafs.html"><strong aria-hidden="true">1.</strong> CASTEP XPS and NEXAFS Tutorial</a></li><li class="chapter-item expanded affix "><li class="part-title">Compilation guides</li><li class="chapter-item expanded "><a href="compilation/aims-avon.html"><strong aria-hidden="true">2.</strong> FHI aims on Avon</a></li><li class="chapter-item expanded "><a href="compilation/aims-sulis.html"><strong aria-hidden="true">3.</strong> FHI aims on Sulis</a></li><li class="chapter-item expanded "><a href="compilation/gpaw-archer2.html"><strong aria-hidden="true">4.</strong> GPAW on Archer2</a></li><li class="chapter-item expanded "><a href="compilation/gpaw-sulis.html"><strong aria-hidden="true">5.</strong> GPAW on Sulis</a></li><li class="chapter-item expanded affix "><li class="part-title">Julia tutorials</li><li class="chapter-item expanded "><a href="julia/julia-setup.html"><strong aria-hidden="true">6.</strong> Setup Julia on HPC systems</a></li><li class="chapter-item expanded "><a href="julia/nqcd.html"><strong aria-hidden="true">7.</strong> Contributing to NQCD</a></li><li class="chapter-item expanded "><a href="julia/hosting-jll.html"><strong aria-hidden="true">8.</strong> Hosting binary packages with BinaryBuilder.jl</a></li><li class="chapter-item expanded "><a href="julia/distributed-slurm.html"><strong aria-hidden="true">9.</strong> Distributed Julia on Slurm clusters</a></li><li class="chapter-item expanded affix "><li class="part-title">Visualisation and rendering</li><li class="chapter-item expanded "><a href="visualisation/pymol.html"><strong aria-hidden="true">10.</strong> Pymol API tutorial</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -595,6 +595,98 @@ for fortran code.</li>
 You can generate a token <a href="https://github.com/settings/tokens">here</a> which you can add to <code>~/.julia/config/startup.jl</code> with the line <code>ENV[&quot;GITHUB_TOKEN&quot;] = token</code>.</p>
 <p>After the script runs, it will automatically upload the package to the specified `--deploy=&quot;user/repo&quot;. To make a new version, just update the version number in the script and run it again.</p>
 <p>Hopefully this is everything you need, check the BinaryBuilder.jl docs for more info. They provide information on how to use your new _jll package and give other options for the sources, platforms etc.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="distributed-julia-on-slurm-clusters"><a class="header" href="#distributed-julia-on-slurm-clusters">Distributed Julia on Slurm clusters</a></h1>
+<p>Within Julia, there are <a href="https://docs.julialang.org/en/v1/manual/parallel-computing/">many options for parallel programming</a>,
+but this page will describe usage of the distributed memory parallelism provided by the <a href="https://docs.julialang.org/en/v1/manual/distributed-computing/">Distributed</a> module.</p>
+<p>In particular, this is the form of parallelism used for <a href="https://diffeq.sciml.ai/stable/features/ensemble/#EnsembleAlgorithms">DifferentialEquations.jl EnsembleDistributed</a> calculations,
+which is the recommended method for parallel simulations in <a href="https://github.com/NQCD/NQCDynamics.jl">NQCDynamics.jl</a>.
+The detailed description in the <a href="https://docs.julialang.org/en/v1/manual/distributed-computing/">Julia manual</a> describes how to write your own parallel code,
+but this guide will focus on how to setup and use parallel code on a Slurm cluster.</p>
+<h2 id="introduction-to-julia-multiprocessing"><a class="header" href="#introduction-to-julia-multiprocessing">Introduction to Julia multiprocessing</a></h2>
+<p>By default, Julia launches with a single process.
+Extra processes can be launched by specifying the <code>-p n</code> command line argument.
+<code>n</code> refers to the number of worker processes and should be equal to the number of cores on the machine.</p>
+<p>Launching Julia with <code>julia -p 2</code>:</p>
+<pre><code class="language-julia">nworkers()
+2
+</code></pre>
+<p>Alternatively, the number of workers can be modified after launching Julia using <code>addprocs</code>:</p>
+<pre><code class="language-julia">using Distributed
+addprocs(4)
+nworkers()
+4
+</code></pre>
+<blockquote>
+<p>Launching Julia with <code>-p</code> implicitly executes <code>using Distributed</code>.
+To access the <code>nworkers</code> and <code>addprocs</code> functions when launched without <code>-p</code>,
+include <code>using Distributed</code> at the top of your script.</p>
+</blockquote>
+<h2 id="using-slurmclustermanager"><a class="header" href="#using-slurmclustermanager">Using <a href="https://github.com/kleinhenz/SlurmClusterManager.jl">SlurmClusterManager</a></a></h2>
+<p>On Slurm clusters, there is a simple way to ensure we are running Julia with the correct amount of processes.
+<a href="https://github.com/kleinhenz/SlurmClusterManager.jl">SlurmClusterManager.jl</a> gives us:</p>
+<pre><code class="language-julia">using Distributed, SlurmClusterManager
+addprocs(SlurmManager())
+</code></pre>
+<p>When this script is launched from within a Slurm submission,
+<code>addprocs(SlurmManager())</code> will automatically detect the correct amount of processes from the Slurm environment variables defined in the submission script.
+This means we only have to specify our allocation in the Slurm script and Julia will sort itself out.</p>
+<p>A Slurm script might look something like this, where <code>my_script.jl</code> uses <a href="https://github.com/kleinhenz/SlurmClusterManager.jl">SlurmClusterManager.jl</a>
+to ensure Julia uses the correct amount of processes.</p>
+<pre><code class="language-bash">#!/bin/bash
+#SBATCH --nodes=16
+#SBATCH --time=24:00:00
+#SBATCH --ntasks-per-node=128
+#SBATCH --cpus-per-task=1
+
+julia my_script.jl
+</code></pre>
+<h2 id="code-loading-considerations"><a class="header" href="#code-loading-considerations">Code loading considerations</a></h2>
+<p>Now that we have described how to launch Julia correctly, there are a few extra considerations to ensure your script will execute without issue.</p>
+<h3 id="everywhere-macro"><a class="header" href="#everywhere-macro">@everywhere macro</a></h3>
+<p>As described in the <a href="https://docs.julialang.org/en/v1/manual/distributed-computing/#code-availability">Julia manual</a>,
+by default, any code that is imported or functions that are defined are loaded only on process 1.
+This will lead to errors as soon as other processes attempt to execute code that they cannot see.
+To fix this, the <a href="https://docs.julialang.org/en/v1/stdlib/Distributed/#Distributed.@everywhere">@everywhere</a> macro can be used to load code on all processes.
+For example, any packages that you want your parallel processes to use should be imported with <code>@everywhere</code>:</p>
+<pre><code class="language-julia">using Distributed, SlurmClusterManager
+addprocs(SlurmManager())
+
+@everywhere using LinearAlgebra
+@everywhere using NQCDynamics
+</code></pre>
+<blockquote>
+<p>To avoid writing <code>@everywhere</code> many times, you can use a <code>begin ... end</code> block.
+This is equivalent to the above:</p>
+<pre><code class="language-julia">@everywhere begin
+  using LinearAlgebra
+  using NQCDynamics
+end
+</code></pre>
+</blockquote>
+<h3 id="julia-environments"><a class="header" href="#julia-environments">Julia environments</a></h3>
+<p>It is recommended that you use <a href="https://pkgdocs.julialang.org/v1/environments/">Pkg environments</a> to manage your project dependencies.
+As with code loading, the environment must be activated for all processes.
+There are a few different ways to do this:</p>
+<h4 id="activate-the-environment-inside-julia-script"><a class="header" href="#activate-the-environment-inside-julia-script">Activate the environment inside Julia script</a></h4>
+<p>A simple way to do this is to use <code>Pkg.activate</code> with <code>@everywhere</code>:</p>
+<pre><code class="language-julia">@everywhere begin
+    using Pkg
+    Pkg.activate(&quot;path/to/environment&quot;)
+end
+</code></pre>
+<h4 id="activate-the-environment-from-the-command-line"><a class="header" href="#activate-the-environment-from-the-command-line">Activate the environment from the command line</a></h4>
+<p>Alternatively, if you launch Julia with <code>--project=path/to/env</code>, you can add the <code>exeflags=&quot;--project&quot;</code> keyword argument to <code>addprocs</code> to
+ensure that each process correctly activates the environment. </p>
+<pre><code class="language-bash">$ julia --project=path/to/env
+julia&gt; addprocs(10; exeflags=&quot;--project&quot;)
+</code></pre>
+<h4 id="use-drwatsonquickactivate"><a class="header" href="#use-drwatsonquickactivate">Use <code>DrWatson.@quickactivate</code></a></h4>
+<p>Another option is to use <a href="https://juliadynamics.github.io/DrWatson.jl/dev/">DrWatson</a> to manage your project.
+Along with a whole host of project management utilities, it provides the <a href="https://juliadynamics.github.io/DrWatson.jl/dev/project/#DrWatson.@quickactivate"><code>@quickactivate</code> macro</a>
+which can be combined with <code>@everywhere</code> to quickly activate your project.</p>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h2>
+<p>With the above instructions you should now be able to execute Julia scripts that use <code>Distributed</code> multiprocessing.
+For a detailed description of what you can do with this form of parallelism in Julia, refer to the <a href="https://docs.julialang.org/en/v1/manual/distributed-computing/#Multi-processing-and-Distributed-Computing">manual</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="pymol-api-tutorial"><a class="header" href="#pymol-api-tutorial">Pymol API tutorial</a></h1>
 <p>Pymol can be imported and called from python code. This allows scripting and reproducability, without having to mess around with clunky GUIs that belong in the 90s. </p>
 <h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
