@@ -7,5 +7,5 @@ This book contains useful guides and tutorials to help you get up to speed with 
 ## Contributing
 
 This book was created using [mdBook](https://rust-lang.github.io/mdBook/).
-Additional pages can be created by adding a new entry into the `SUMMARY.md` file. 
-This will create a blank markdown file where you can include your contribution.
+Each page corresponds to a separate markdown file.
+Additional pages can be created by adding a new entry into the `SUMMARY.md` file and creating a new markdown file. 

@@ -65,11 +65,9 @@ The Job submit script for gpaw looks for example like this:
 #SBATCH --time=00:05:00
 #SBATCH --account=xxx
 
-
 module purge
 module load foss/2020b
 module load Python/3.8.6
-
 
 export PYTHONUSERBASE=/home/s/user/.local
 export PATH=$PYTHONUSERBASE/bin:$PATH

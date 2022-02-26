@@ -2,13 +2,11 @@
 
 ## Step 1: Git clone FHIaims from gitlab
 
-
 To gain access to the Gitlab, you can e-mail kokott@fhi-berlin.mpg.de or aims-coordinators@fhi-berlin.mpg.de which should get you access after setting up a user account. 
 
 Once you have access, 
 1. SSH into Avon HPC `ssh username@avon.scrtp.warwick.ac.uk`
 2. Git clone FHIaims repository `git clone https://aims-git.rz-berlin.mpg.de/aims/FHIaims.git ` 
-
 
 ## Step 2: Compiling FHIaims 
 
@@ -26,17 +24,11 @@ Within the `build/` directory `touch initial.cmake`
 
 ```makefile
 set(CMAKE_Fortran_COMPILER mpiifort CACHE STRING "" FORCE)
-
 set(CMAKE_Fortran_FLAGS "-O3 -fp-model precise" CACHE STRING "" FORCE)
-
 set(Fortran_MIN_FLAGS "-O0 -fp-model precise" CACHE STRING "" FORCE)
-
 set(LIB_PATHS "$ENV{MKLROOT}/lib/intel64" CACHE STRING "" FORCE)
-
 set(LIBS "mkl_intel_lp64 mkl_sequential mkl_core mkl_blacs_intelmpi_lp64 mkl_scalapack_lp64" CACHE STRING "" FORCE)
-
 set(CMAKE_C_COMPILER icc CACHE STRING "" FORCE)
-
 set(CMAKE_C_FLAGS "-O3 -ip -fp-model precise" CACHE STRING "" FORCE)
 ```
 
