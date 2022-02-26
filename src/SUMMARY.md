@@ -18,6 +18,7 @@
 - [Setup Julia on HPC systems](julia/julia-setup.md)
 - [Contributing to NQCD](julia/nqcd.md)
 - [Hosting binary packages with BinaryBuilder.jl](julia/hosting-jll.md)
+- [Distributed Julia on Slurm clusters](julia/distributed-slurm.md)
 
 # Visualisation and rendering
 
