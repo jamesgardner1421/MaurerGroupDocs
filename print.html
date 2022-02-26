@@ -148,8 +148,8 @@
 <p>This book contains useful guides and tutorials to help you get up to speed with the software and scripts used within our group.</p>
 <h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
 <p>This book was created using <a href="https://rust-lang.github.io/mdBook/">mdBook</a>.
-Additional pages can be created by adding a new entry into the <code>SUMMARY.md</code> file. 
-This will create a blank markdown file where you can include your contribution.</p>
+Each page corresponds to a separate markdown file.
+Additional pages can be created by adding a new entry into the <code>SUMMARY.md</code> file and creating a new markdown file. </p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="castep-xps-and-nexafs-tutorial"><a class="header" href="#castep-xps-and-nexafs-tutorial">CASTEP XPS and NEXAFS Tutorial</a></h1>
 <p>All tools needed to generate XPS and NEXAFS spectra can be found on the Maurer Group Github in the 'grouptools/NEXAFS_scripts' repository. Included in this are several tools to help in this process:</p>
 <ul>
@@ -262,17 +262,11 @@ module load CMake/3.16.4
 Within the <code>build/</code> directory <code>touch initial.cmake</code> </p>
 <h3 id="example-of-initialcmake"><a class="header" href="#example-of-initialcmake">Example of <code>initial.cmake</code></a></h3>
 <pre><code class="language-makefile">set(CMAKE_Fortran_COMPILER mpiifort CACHE STRING &quot;&quot; FORCE)
-
 set(CMAKE_Fortran_FLAGS &quot;-O3 -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(Fortran_MIN_FLAGS &quot;-O0 -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(LIB_PATHS &quot;$ENV{MKLROOT}/lib/intel64&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(LIBS &quot;mkl_intel_lp64 mkl_sequential mkl_core mkl_blacs_intelmpi_lp64 mkl_scalapack_lp64&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(CMAKE_C_COMPILER icc CACHE STRING &quot;&quot; FORCE)
-
 set(CMAKE_C_FLAGS &quot;-O3 -ip -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
 </code></pre>
 <p>Next issue the command <code>cmake -C initial.cmake. ../.</code> - after this is complete output then issue the next command <code>make -j 8</code> - NB: the number refers to the number of processes on that machine. 
@@ -474,11 +468,9 @@ extra_compile_args =['-fPIC']
 #SBATCH --time=00:05:00
 #SBATCH --account=xxx
 
-
 module purge
 module load foss/2020b
 module load Python/3.8.6
-
 
 export PYTHONUSERBASE=/home/s/user/.local
 export PATH=$PYTHONUSERBASE/bin:$PATH

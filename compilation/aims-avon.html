@@ -160,17 +160,11 @@ module load CMake/3.16.4
 Within the <code>build/</code> directory <code>touch initial.cmake</code> </p>
 <h3 id="example-of-initialcmake"><a class="header" href="#example-of-initialcmake">Example of <code>initial.cmake</code></a></h3>
 <pre><code class="language-makefile">set(CMAKE_Fortran_COMPILER mpiifort CACHE STRING &quot;&quot; FORCE)
-
 set(CMAKE_Fortran_FLAGS &quot;-O3 -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(Fortran_MIN_FLAGS &quot;-O0 -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(LIB_PATHS &quot;$ENV{MKLROOT}/lib/intel64&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(LIBS &quot;mkl_intel_lp64 mkl_sequential mkl_core mkl_blacs_intelmpi_lp64 mkl_scalapack_lp64&quot; CACHE STRING &quot;&quot; FORCE)
-
 set(CMAKE_C_COMPILER icc CACHE STRING &quot;&quot; FORCE)
-
 set(CMAKE_C_FLAGS &quot;-O3 -ip -fp-model precise&quot; CACHE STRING &quot;&quot; FORCE)
 </code></pre>
 <p>Next issue the command <code>cmake -C initial.cmake. ../.</code> - after this is complete output then issue the next command <code>make -j 8</code> - NB: the number refers to the number of processes on that machine. 
